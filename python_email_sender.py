@@ -28,7 +28,6 @@ def send_spoofed_email(spoofed_domain, recipient_email):
         </html>
         """
 
-        # Create MIME message
         message = MIMEMultipart("alternative")
         message["Subject"] = subject
         message["From"] = spoofed_sender_email  # Spoofed sender address
