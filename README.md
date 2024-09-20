@@ -13,7 +13,7 @@ The **DMARC-SPF-Checker** is a Python-based application designed to analyze DMAR
 2. **Logging Mechanisms**:
    - A comprehensive log is maintained of all records collected, including:
      - Timestamp
-     - Domain
+     - Domaina
      - DMARC Record
      - SPF Record
 
