@@ -57,7 +57,6 @@ def generate_html_report(csv_file="log.csv", html_file="report.html"):
         file.write("<h1>DMARC and SPF Log Report</h1>")
         file.write("<table id='logTable'>")
 
-        # Write header row with filter inputs
         file.write("<tr>")
         for header in rows[0]:
             file.write(
@@ -65,7 +64,6 @@ def generate_html_report(csv_file="log.csv", html_file="report.html"):
             )
         file.write("</tr>")
 
-        # Write data rows
         for row in rows[1:]:
             file.write("<tr>")
             for column in row:
