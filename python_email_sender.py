@@ -30,7 +30,7 @@ def send_spoofed_email():
         message["From"] = spoofed_sender_email  # This is the spoofed address
         message["To"] = recipient_email
 
-        # Create plain-text and HTML versions of the message
+        # HTML
         text_part = MIMEText(
             "Hello, this is a test email with a spoofed sender address.", "plain"
         )
