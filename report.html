@@ -1,0 +1,24 @@
+<html><head><title>DMARC and SPF Log Report</title><style>body { font-family: Arial, sans-serif; margin: 20px; }h1 { color: #333; }table { width: 100%; border-collapse: collapse; margin-top: 20px; }th, td { padding: 10px; text-align: left; border: 1px solid #ddd; }th { background-color: #f2f2f2; }tr:nth-child(even) { background-color: #f9f9f9; }tr:hover { background-color: #f1f1f1; }</style><script>
+        function filterTable() {
+            const table = document.getElementById('logTable');
+            const rows = table.getElementsByTagName('tr');
+            const filterInputs = document.querySelectorAll('input[type="text"]');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let showRow = true;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const filterValue = filterInputs[j].value.toLowerCase();
+                    const cellText = cells[j].innerText.toLowerCase();
+                    
+                    // Check if the cell starts with the filter value
+                    if (filterValue && !cellText.startsWith(filterValue)) {
+                        showRow = false;
+                        break;
+                    }
+                }
+                rows[i].style.display = showRow ? '' : 'none';
+            }
+        }
+        </script></head><body><h1>DMARC and SPF Log Report</h1><table id='logTable'><tr><th>Timestamp <input type='text' onkeyup='filterTable()' placeholder='Filter A-Z...'></th><th> Domain <input type='text' onkeyup='filterTable()' placeholder='Filter A-Z...'></th><th> DMARC Policy <input type='text' onkeyup='filterTable()' placeholder='Filter A-Z...'></th><th> SPF Record <input type='text' onkeyup='filterTable()' placeholder='Filter A-Z...'></th></tr><tr><td>2024-09-20 01:31:42</td><td> tesla.com</td><td> reject</td><td> v=spf1 ip4:54.240.84.225/32 ip4:54.240.84.226/31 ip4:54.240.84.228/30 ip4:54.240.84.232/29 ip4:54.240.84.240/29 ip4:54.240.84.248/30 ip4:54.240.84.252/32 ip4:44.239.249.139 ip4:52.24.70.112 ip4:34.223.204.78 ip4:213.244.145.203 ip4:213.244.145.219 ip4:213" ".244.145.204 ip4:213.244.145.220 ip4:8.47.24.203 ip4:8.47.24.219 ip4:8.47.24.204 ip4:8.47.24.220 ip4:8.45.124.203 ip4:8.45.124.219 ip4:8.45.124.204 ip4:8.45.124.220 ip4:8.21.14.203 ip4:8.21.14.219 ip4:8.21.14.204 ip4:8.21.14.220 ip4:8.21.14.194 ip4:8.21.1" "4.211 ip4:212.49.145.0/24 ip4:91.103.52.0/22 ip4:168.245.123.10 ip4:216.81.144.165 ip4:149.72.247.52 ip4:149.72.134.64 ip4:149.72.152.236 ip4:149.72.163.58 ip4:149.72.172.170 ip4:167.89.90.62 ip4:158.228.129.79 ip4:216.81.144.165 ip4:117.50.14.178 ip4:117" ".50.35.199 ip4:54.240.42.110 ip4:54.240.42.111 ip4:199.71.239.178 ip4:67.216.183.10 ip4:8.43.178.222 ip4:199.71.239.52 include:u13494342.wl093.sendgrid.net include:spf.protection.outlook.com include:mail.zendesk.com include:_spfsn.teslamotors.com include:" "_spf.qualtrics.com include:_spf.ultipro.com include:_spf.psm.knowbe4.com include:spf1.sendcloud.org include:spf2.sendcloud.org -all</td></tr><tr><td>2024-09-20 01:31:47</td><td> byu.edu</td><td> none</td><td> v=spf1 include:_SPF_campus.byu.edu include:spf.protection.outlook.com ?all</td></tr><tr><td>2024-09-20 01:31:51</td><td> nasa.gov</td><td> reject</td><td> v=spf1 include:_spf-4a.nasa.gov include:_spf-4b.nasa.gov include:_spf-4c.nasa.gov include:_spf-4d.nasa.gov include:_spf-4g.nasa.gov include:_spf-4m.nasa.gov include:_spf-4x.nasa.gov include:_spf-6a.nasa.gov include:spf.protection.outlook.com -all</td></tr><tr><td>2024-09-20 01:31:55</td><td> drive.com</td><td> None</td><td> None</td></tr><tr><td>2024-09-20 01:31:59</td><td> ensign.edu</td><td> none</td><td> v=spf1 include:%{ir}.%{v}.%{d}.spf.has.pphosted.com ip4:198.60.19.6 ip4:198.60.19.7 -all</td></tr><tr><td>2024-09-20 01:32:17</td><td> github.com</td><td> reject</td><td> v=spf1 ip4:192.30.252.0/22 include:_netblocks.google.com include:_netblocks2.google.com include:_netblocks3.google.com include:spf.protection.outlook.com include:mail.zendesk.com include:_spf.salesforce.com include:servers.mcsv.net ip4:166.78.69.169 ip4:1" "66.78.69.170 ip4:166.78.71.131 ip4:167.89.101.2 ip4:167.89.101.192/28 ip4:192.254.112.60 ip4:192.254.112.98/31 ip4:192.254.113.10 ip4:192.254.113.101 ip4:192.254.114.176 ip4:62.253.227.114 ~all</td></tr><tr><td>2024-09-20 01:33:01</td><td> toblerone.com</td><td> reject</td><td> v=spf1 -all</td></tr><tr><td>2024-09-20 01:33:06</td><td> apple.com</td><td> quarantine</td><td> v=spf1 include:_spf.apple.com include:_spf-txn.apple.com ~all</td></tr><tr><td>2024-09-20 01:33:10</td><td> dell.com</td><td> reject</td><td> v=spf1 include:%{ir}.%{v}.%{d}.spf.has.pphosted.com ~all</td></tr></table></body></html>
