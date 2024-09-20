@@ -10,7 +10,7 @@ The **DMARC-SPF-Checker** is a Python-based application designed to analyze DMAR
    - Users can choose whether they want to send out a spoofed email.
    - If the user selects to send an email, the application prompts to execute `smtp.py`.
 
-2. **Logging Mechanism**:
+2. **Logging Mechanisms**:
    - A comprehensive log is maintained of all records collected, including:
      - Timestamp
      - Domain
