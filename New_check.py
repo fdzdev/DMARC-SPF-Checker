@@ -122,7 +122,7 @@ def main():
                     )
 
                 if user_input == "1":
-                    # Generate spoofed email address based on the domain
+                    # grab domain and use it as the email
                     spoofed_sender_email = f"president@{domain}"
                     recipient_email = (
                         "facu.tha@gmail.com"  # You can customize this as needed
