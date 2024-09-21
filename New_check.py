@@ -69,11 +69,9 @@ def log_domain_scan(domain, dmarc_policy, spf_record, log_file="log.csv"):
 
         # Write the log entry to the log file in append mode
         with open(log_file, "a") as file:
-            # Write header if the file didn't exist before
+            # Write header if the file didn't exist before!!!!
             if not file_exists:
-                file.write(
-                    "Timestamp, Domain, DMARC Policy, SPF Record\n"
-                )  # Write header
+                file.write("Timestamp, Domain, DMARC Policy, SPF Record\n")
 
             file.write(log_entry)
 
@@ -84,7 +82,6 @@ def log_domain_scan(domain, dmarc_policy, spf_record, log_file="log.csv"):
 
 
 def main():
-    # Get input from the user
     domains_input = input(
         "Please enter the domains you want to check (comma-separated): "
     )
@@ -99,7 +96,6 @@ def main():
 
         results[domain] = {"DMARC": dmarc_policy, "SPF": spf_record}
 
-    # Create a larger, cooler header using pyfiglet
     header = pyfiglet.figlet_format("DMARC and SPF Check Report", font="slant")
     print(colored(header, "cyan", attrs=["bold"]))
 
@@ -116,7 +112,6 @@ def main():
             if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
                 print("DMARC issue found for domain!")
 
-                # Ask the user for further action
                 user_input = input(
                     "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
                 )
