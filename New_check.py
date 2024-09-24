@@ -109,28 +109,6 @@ def main():
                 + colored(f"DMARC Policy = {dmarc_policy}", "green")
             )
 
-            if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
-                print("DMARC issue found for domain!")
-
-                user_input = input(
-                    "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
-                )
-
-                while user_input not in ["1", "2"]:
-                    user_input = input(
-                        "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
-                    )
-
-                if user_input == "1":
-                    # grab domain and use it as the email
-                    spoofed_sender_email = f"president@{domain}"
-                    recipient_email = (
-                        "facu.tha@gmail.com"  # You can customize this as needed
-                    )
-                    send_spoofed_email(spoofed_sender_email, recipient_email)
-                elif user_input == "2":
-                    print("Exiting program.")
-                    break
         else:
             print(
                 colored(f"{domain}: ", "yellow")
@@ -143,6 +121,27 @@ def main():
             print(colored(f"    No SPF Record found", "red"))
 
         print("-" * 50)
+
+        if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
+            print("DMARC issue found for domain!")
+
+            user_input = input(
+                "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
+            )
+
+        while user_input not in ["1", "2"]:
+            user_input = input(
+                "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
+            )
+
+        if user_input == "1":
+            # grab domain and use it as the email
+            spoofed_sender_email = f"president@{domain}"
+            recipient_email = "facu.tha@gmail.com"  # You can customize this as needed
+            send_spoofed_email(spoofed_sender_email, recipient_email)
+        elif user_input == "2":
+            print("Exiting program.")
+            break
 
 
 if __name__ == "__main__":
