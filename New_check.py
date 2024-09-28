@@ -5,6 +5,10 @@ import os
 from test import send_spoofed_email
 import datetime
 
+"""
+1goat
+"""
+
 
 def check_dmarc_policy(domain):
     try:
