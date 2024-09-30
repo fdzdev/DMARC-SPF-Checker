@@ -124,8 +124,12 @@ def main():
         print("-" * 50)
 
         # Handle DMARC issues
-        if dmarc_policy == "None" or dmarc_policy == "No DMARC Policy found":
-            cprint("DMARC issue found for domain!", "red", "on_green")
+        if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
+            cprint(
+                f"DMARC issue found for {domain}! DMARC Policy not being enforced",
+                "red",
+                "on_red",
+            )
             user_input = input(
                 "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
             )
@@ -136,7 +140,6 @@ def main():
                 )
 
             if user_input == "1":
-                # Grab domain and use it as the email
                 spoofed_sender_email = f"president@{domain}"
                 recipient_email = (
                     "facu.tha@gmail.com"  # You can customize this as needed
@@ -145,6 +148,8 @@ def main():
             elif user_input == "2":
                 print("Exiting program.")
                 break
+        else:
+            cprint(f"No issues found at the moment. {domain}!", "red", "on_green")
 
 
 if __name__ == "__main__":
