@@ -4,7 +4,7 @@
 
 The **DMARC-SPF-Checker** is a Python-based application designed to analyze DMARC and SPF records for a list of domains. The tool provides insights into the email security policies of domains, logs the results for future reference, and offers options for sending spoofed emails for testing purposes. The application aims to enhance email security by ensuring domains are correctly configured with DMARC and SPF policies.
 
-![Alt text](https://github.com/Facuu35/DMARC-SPF-Checker/blob/main/Pictures/Screen0.png)
+![Analysis](https://github.com/Facuu35/DMARC-SPF-Checker/blob/main/Pictures/Screen0.png)
 
 ## Features
 
@@ -12,12 +12,16 @@ The **DMARC-SPF-Checker** is a Python-based application designed to analyze DMAR
    - Users can choose whether they want to send out a spoofed email.
    - If the user selects to send an email, the application prompts to execute `smtp.py`.
 
+![Analysis](https://github.com/Facuu35/DMARC-SPF-Checker/blob/main/Pictures/Screen2.png)
+
 2. **Logging Mechanisms**:
    - A comprehensive log is maintained of all records collected, including:
      - Timestamp
-     - Domaina
+     - Domain
      - DMARC Record
      - SPF Record
+
+![Analysis](https://github.com/Facuu35/DMARC-SPF-Checker/blob/main/Pictures/Screen1.png)
 
 3. **DNS Collector Checks**:
    - Every time the DNS collector runs, it checks the logs for existing records.
