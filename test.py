@@ -12,7 +12,7 @@ def send_spoofed_email(spoofed_domain, recipient_email):
         auth_email = "personas@fedeyclau.info"  # Email used for authentication
         smtp_server = "c1310741.ferozo.com"
         port = 465
-        password = "40@P@CR8yG"  # Password for personas@fedeyclau.info
+        password = ""  # Password for personas@fedeyclau.info
 
         # Email message content
         subject = "Testing spoofed email"
