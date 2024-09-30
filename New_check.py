@@ -56,6 +56,48 @@ def check_spf_record(domain):
         return None
 
 
+def read_log(log_file="log.csv"):
+    log_data = {}
+
+    try:
+        # Check if the log file exists
+        if os.path.isfile(log_file):
+            with open(log_file, "r") as file:
+                # Read and split lines
+                for line_num, line in enumerate(file):
+                    if line_num == 0:
+                        continue  # Skip the header line
+
+                    # Split the line by commas and strip any excess spaces
+                    parts = line.strip().split(", ")
+
+                    # Ensure that the line has exactly 4 elements
+                    if len(parts) != 4:
+                        print(
+                            colored(
+                                f"Warning: Line {line_num + 1} is malformed.", "yellow"
+                            )
+                        )
+                        continue
+
+                    # Unpack the parts into variables
+                    timestamp, domain, dmarc_policy, spf_record = parts
+
+                    # Populate log_data with the extracted information
+                    log_data[domain] = {
+                        "timestamp": timestamp,
+                        "DMARC": dmarc_policy,
+                        "SPF": spf_record,
+                    }
+        else:
+            print(colored("Log file not found. Proceeding with DNS lookups.", "yellow"))
+
+    except Exception as e:
+        print(colored(f"Error reading log file: {e}", "red"))
+
+    return log_data
+
+
 def log_domain_scan(domain, dmarc_policy, spf_record, log_file="log.csv"):
     try:
         # Check if the file exists
@@ -82,6 +124,9 @@ def log_domain_scan(domain, dmarc_policy, spf_record, log_file="log.csv"):
 
 
 def main():
+    # Read the log file first
+    log_data = read_log()
+
     domains_input = input(
         "Please enter the domains you want to check (comma-separated): "
     )
@@ -104,25 +149,27 @@ def main():
     header = pyfiglet.figlet_format("DMARC and SPF Check Report", font="slant")
     print(colored(header, "cyan", attrs=["bold"]))
 
+    domain_counter = 1
+
     for domain, records in results.items():
         dmarc_policy = records["DMARC"]
         spf_record = records["SPF"]
         full_dmarc_record = records["Full DMARC"]
         bold_domain = f"\033[1m{domain}\033[0m"
 
-        print(colored(f"{bold_domain}: ", "yellow"))
+        print(colored(f"{domain_counter}: {bold_domain}: ", "yellow"))
+        domain_counter += 1
         if dmarc_policy:
-            print(colored(f"    DMARC Policy = {dmarc_policy}", "green"))
             print(colored(f"    Full DMARC Record = {full_dmarc_record}", "blue"))
+            print(colored(f"    DMARC Policy = {dmarc_policy}", "green"))
         else:
             print(colored("    No DMARC Policy found", "red"))
 
         if spf_record:
-            print(colored(f"    SPF Record = {spf_record}", "green"))
+            print(colored(f"    SPF Record = {spf_record}", "blue"))
+            print()
         else:
             print(colored("    No SPF Record found", "red"))
-
-        print("-" * 50)
 
         # Handle DMARC issues
         bold_domain = f"\033[1m{domain}\033[0m"
@@ -132,13 +179,16 @@ def main():
                 "red",
                 "on_red",
             )
+
+            print()
             user_input = input(
-                "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
+                "Choose how to proceed:\n1. Send out email (Test Email Spoofing)\n2. Next\n> "
             )
+            print()
 
             while user_input not in ["1", "2"]:
                 user_input = input(
-                    "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
+                    "Choose how to proceed:\n1. Send out email (Test Email Spoofing)\n2. Next\n> "
                 )
 
             if user_input == "1":
@@ -148,10 +198,13 @@ def main():
                 )
                 send_spoofed_email(spoofed_sender_email, recipient_email)
             elif user_input == "2":
-                print("Exiting program.")
-                break
+                print("Moving onto the next.")
+                continue
         else:
+            print()
             cprint(f"No issues found in {bold_domain} at the moment!", "blue")
+            print()
+            print("-" * 50)
 
 
 if __name__ == "__main__":
