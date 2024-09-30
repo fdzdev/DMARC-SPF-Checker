@@ -5,10 +5,6 @@ import os
 from test import send_spoofed_email
 import datetime
 
-"""
-1goat
-"""
-
 
 def check_dmarc_policy(domain):
     try:
@@ -21,21 +17,21 @@ def check_dmarc_policy(domain):
                     if part.strip().startswith("p="):
                         policy = part.split("=")[1].strip()
                         break
-                if policy:
-                    return policy
-        return "DMARC exists, no policy"
+                return {"policy": policy, "full_record": txt_record}
+        # If DMARC exists but no policy is found
+        return {"policy": "DMARC exists, no policy", "full_record": txt_record}
     except dns.resolver.NoAnswer:
-        return None  # No DMARC record found
+        return {"policy": None, "full_record": None}  # No DMARC record found
     except dns.resolver.NXDOMAIN:
-        return None  # Domain doesn't exist
+        return {"policy": None, "full_record": None}  # Domain doesn't exist
     except dns.resolver.Timeout:
         print(
             colored(f"Timeout error for {domain}. DNS resolution took too long.", "red")
         )
-        return None
+        return {"policy": None, "full_record": None}
     except Exception as e:
         print(colored(f"Error checking DMARC for {domain}: {e}", "red"))
-        return None
+        return {"policy": None, "full_record": None}
 
 
 def check_spf_record(domain):
@@ -73,7 +69,7 @@ def log_domain_scan(domain, dmarc_policy, spf_record, log_file="log.csv"):
 
         # Write the log entry to the log file in append mode
         with open(log_file, "a") as file:
-            # Write header if the file didn't exist before!!!!
+            # Write header if the file didn't exist before
             if not file_exists:
                 file.write("Timestamp, Domain, DMARC Policy, SPF Record\n")
 
@@ -94,11 +90,16 @@ def main():
     results = {}
 
     for domain in domains:
-        dmarc_policy = check_dmarc_policy(domain)
+        dmarc_info = check_dmarc_policy(domain)
         spf_record = check_spf_record(domain)
-        log_domain_scan(domain, dmarc_policy, spf_record)
+        log_domain_scan(domain, dmarc_info["policy"], spf_record)  # Adjust logging
+        full_dmarc_record = dmarc_info["full_record"] if dmarc_info else None
 
-        results[domain] = {"DMARC": dmarc_policy, "SPF": spf_record}
+        results[domain] = {
+            "DMARC": dmarc_info["policy"],
+            "SPF": spf_record,
+            "Full DMARC": full_dmarc_record,
+        }
 
     header = pyfiglet.figlet_format("DMARC and SPF Check Report", font="slant")
     print(colored(header, "cyan", attrs=["bold"]))
@@ -106,46 +107,49 @@ def main():
     for domain, records in results.items():
         dmarc_policy = records["DMARC"]
         spf_record = records["SPF"]
+        full_dmarc_record = records["Full DMARC"]
 
+        print(colored(f"{domain}: ", "yellow"))
         if dmarc_policy:
-            print(
-                colored(f"{domain}: ", "yellow")
-                + colored(f"DMARC Policy = {dmarc_policy}", "green")
-            )
-
+            print(colored(f"    DMARC Policy = {dmarc_policy}", "green"))
+            print(colored(f"    Full DMARC Record = {full_dmarc_record}", "blue"))
         else:
-            print(
-                colored(f"{domain}: ", "yellow")
-                + colored("No DMARC Policy found", "red")
-            )
+            print(colored("    No DMARC Policy found", "red"))
 
         if spf_record:
             print(colored(f"    SPF Record = {spf_record}", "green"))
         else:
-            print(colored(f"    No SPF Record found", "red"))
+            print(colored("    No SPF Record found", "red"))
 
         print("-" * 50)
 
+        # Handle DMARC issues
         if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
-            print("DMARC issue found for domain!")
-
+            cprint(
+                f"DMARC issue found for {domain}! DMARC Policy not being enforced",
+                "red",
+                "on_red",
+            )
             user_input = input(
                 "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
             )
 
-        while user_input not in ["1", "2"]:
-            user_input = input(
-                "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
-            )
+            while user_input not in ["1", "2"]:
+                user_input = input(
+                    "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
+                )
 
-        if user_input == "1":
-            # grab domain and use it as the email
-            spoofed_sender_email = f"president@{domain}"
-            recipient_email = "facu.tha@gmail.com"  # You can customize this as needed
-            send_spoofed_email(spoofed_sender_email, recipient_email)
-        elif user_input == "2":
-            print("Exiting program.")
-            break
+            if user_input == "1":
+                spoofed_sender_email = f"president@{domain}"
+                recipient_email = (
+                    "facu.tha@gmail.com"  # You can customize this as needed
+                )
+                send_spoofed_email(spoofed_sender_email, recipient_email)
+            elif user_input == "2":
+                print("Exiting program.")
+                break
+        else:
+            cprint(f"No issues found at the moment. {domain}!", "red", "on_green")
 
 
 if __name__ == "__main__":
