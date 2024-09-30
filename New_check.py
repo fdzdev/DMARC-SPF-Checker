@@ -75,7 +75,7 @@ def log_domain_scan(domain, dmarc_policy, spf_record, log_file="log.csv"):
 
             file.write(log_entry)
 
-        print(f"{domain} logged")
+        print(f"{domain} added to log")
 
     except Exception as e:
         print(colored(f"Error logging to file: {e}", "red"))
@@ -108,8 +108,9 @@ def main():
         dmarc_policy = records["DMARC"]
         spf_record = records["SPF"]
         full_dmarc_record = records["Full DMARC"]
+        bold_domain = f"\033[1m{domain}\033[0m"
 
-        print(colored(f"{domain}: ", "yellow"))
+        print(colored(f"{bold_domain}: ", "yellow"))
         if dmarc_policy:
             print(colored(f"    DMARC Policy = {dmarc_policy}", "green"))
             print(colored(f"    Full DMARC Record = {full_dmarc_record}", "blue"))
@@ -124,9 +125,10 @@ def main():
         print("-" * 50)
 
         # Handle DMARC issues
+        bold_domain = f"\033[1m{domain}\033[0m"
         if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
             cprint(
-                f"DMARC issue found for {domain}! DMARC Policy not being enforced",
+                f"DMARC issue found for {bold_domain}! DMARC Policy not being enforced",
                 "red",
                 "on_red",
             )
@@ -142,14 +144,14 @@ def main():
             if user_input == "1":
                 spoofed_sender_email = f"president@{domain}"
                 recipient_email = (
-                    "facu.tha@gmail.com"  # You can customize this as needed
+                    "facu.tha@gmail.com"  # CHANGE YOUR EMAIL ADDRESS HERE!!!
                 )
                 send_spoofed_email(spoofed_sender_email, recipient_email)
             elif user_input == "2":
                 print("Exiting program.")
                 break
         else:
-            cprint(f"No issues found at the moment. {domain}!", "red", "on_green")
+            cprint(f"No issues found in {bold_domain} at the moment!", "blue")
 
 
 if __name__ == "__main__":
