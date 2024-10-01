@@ -1,0 +1,5 @@
+dns.resolver
+termcolor
+pyfiglet
+os
+datetime
