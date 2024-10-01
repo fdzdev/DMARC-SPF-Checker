@@ -1,4 +1,4 @@
-dns.resolver
+dnspython
 termcolor
 pyfiglet
 os
