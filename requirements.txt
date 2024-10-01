@@ -1,5 +1,4 @@
 dnspython
 termcolor
 pyfiglet
-os
 datetime
