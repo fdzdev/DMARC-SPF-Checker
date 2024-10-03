@@ -75,13 +75,16 @@ def log_domain_scan(domain, dmarc_policy, spf_record, log_file="log.csv"):
 
             file.write(log_entry)
 
-        print(f"{domain} logged")
+        print(f"{domain} added to log")
 
     except Exception as e:
         print(colored(f"Error logging to file: {e}", "red"))
 
 
 def main():
+    # Read the log file first
+    log_data = read_log()
+
     domains_input = input(
         "Please enter the domains you want to check (comma-separated): "
     )
@@ -104,12 +107,16 @@ def main():
     header = pyfiglet.figlet_format("DMARC and SPF Check Report", font="slant")
     print(colored(header, "cyan", attrs=["bold"]))
 
+    domain_counter = 1
+
     for domain, records in results.items():
         dmarc_policy = records["DMARC"]
         spf_record = records["SPF"]
         full_dmarc_record = records["Full DMARC"]
+        bold_domain = f"\033[1m{domain}\033[0m"
 
-        print(colored(f"{domain}: ", "yellow"))
+        print(colored(f"{domain_counter}: {bold_domain}: ", "yellow"))
+        domain_counter += 1
         if dmarc_policy:
             print(colored(f"    DMARC Policy = {dmarc_policy}", "green"))
             print(colored(f"    Full DMARC Record = {full_dmarc_record}", "blue"))
@@ -121,35 +128,36 @@ def main():
         else:
             print(colored("    No SPF Record found", "red"))
 
-        print("-" * 50)
-
         # Handle DMARC issues
+        bold_domain = f"\033[1m{domain}\033[0m"
         if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
             cprint(
-                f"DMARC issue found for {domain}! DMARC Policy not being enforced",
+                f"DMARC issue found for {bold_domain}! DMARC Policy not being enforced",
                 "red",
                 "on_red",
             )
-            user_input = input(
-                "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
-            )
+            user_input = input("Choose how to proceed:\n1. Send out email\n2. Next\n> ")
+            print()
 
             while user_input not in ["1", "2"]:
                 user_input = input(
-                    "Choose how to proceed:\n1. Execute email\n2. Finish\n> "
+                    "Choose how to proceed:\n1. Send out email\n2. Next\n> "
                 )
 
             if user_input == "1":
                 spoofed_sender_email = f"president@{domain}"
                 recipient_email = (
-                    "facu.tha@gmail.com"  # You can customize this as needed
+                    "facu.tha@gmail.com"  # CHANGE YOUR EMAIL ADDRESS HERE!!!
                 )
                 send_spoofed_email(spoofed_sender_email, recipient_email)
             elif user_input == "2":
-                print("Exiting program.")
-                break
+                print("Moving onto the next.")
+                continue
         else:
-            cprint(f"No issues found at the moment. {domain}!", "red", "on_green")
+            print()
+            cprint(f"No issues found in {bold_domain} at the moment!", "blue")
+            print()
+            print("-" * 50)
 
 
 if __name__ == "__main__":

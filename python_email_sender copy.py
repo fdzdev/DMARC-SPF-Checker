@@ -4,11 +4,11 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def send_spoofed_email(spoofed_domain, recipient_email):
+def send_spoofed_email():
     try:
-        # Generate the spoofed email address using the domain passed in
-        spoofed_sender_email = f"{spoofed_domain}"  # Spoofed sender
-        recipient_email = f"{recipient_email}"  # Recipient email
+        # Email details
+        spoofed_sender_email = "nasa@mastercard.us"  # Spoofed sender
+        recipient_email = "facu.tha@gmail.com"  # Recipient email
         auth_email = "personas@fedeyclau.info"  # Email used for authentication
         smtp_server = "c1310741.ferozo.com"
         port = 465
@@ -16,13 +16,12 @@ def send_spoofed_email(spoofed_domain, recipient_email):
 
         # Email message content
         subject = "Testing spoofed email"
-        html_message = f"""\
+        html_message = """\
         <html>
         <body>
             <p>Hello,<br>
                This is a test email to check how spoofed sender addresses are handled.<br>
-               Please review the headers to verify the sender.<br>
-               Spoofed domain: {spoofed_domain}
+               Please review the headers to verify the sender.
             </p>
         </body>
         </html>
@@ -54,11 +53,11 @@ def send_spoofed_email(spoofed_domain, recipient_email):
             )  # Authenticate using personas@fedeyclau.info
             server.sendmail(spoofed_sender_email, recipient_email, message.as_string())
 
-        print(f"Spoofed email sent successfully from {spoofed_sender_email}!")
+        print("Spoofed email sent successfully!")
 
     except Exception as e:
         print(f"Error: {e}")
 
 
-# You can now call the function with a domain dynamically:
-# Example: send_spoofed_email("example.com")
+# Call the function to send the spoofed email
+send_spoofed_email()
