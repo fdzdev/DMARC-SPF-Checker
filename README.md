@@ -56,6 +56,6 @@ This project aims to continuously improve email security analysis and visualizat
 
 Contributions are welcome! Please feel free to submit a pull request or open an issue for any enhancements or bugs you may encounter.
 
-## License
+## Issues / Ideas
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+Feel free to create a new issue if you have problems with the tool, or, would like to request an additional feature.
