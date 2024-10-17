@@ -128,7 +128,7 @@ def main():
 
         # Handle DMARC issues
         bold_domain = f"\033[1m{domain}\033[0m"
-        if dmarc_policy == "none" or dmarc_policy == "No DMARC Policy found":
+        if dmarc_policy is None or dmarc_policy == "No DMARC Policy found":
             cprint(
                 f"DMARC issue found for {bold_domain}! DMARC Policy not being enforced",
                 "red",
