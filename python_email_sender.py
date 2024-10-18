@@ -57,7 +57,3 @@ def send_spoofed_email(spoofed_domain, recipient_email):
 
     except Exception as e:
         print(f"Error: {e}")
-
-
-# You can now call the function with a domain dynamically:
-# Example: send_spoofed_email("example.com")
