@@ -14,6 +14,10 @@ Please enter the domains you want to check (comma-separated): {domain1}, {domain
 
 ![Analysis](https://github.com/Facuu35/DMARC-SPF-Checker/blob/main/Pictures/Screen0.png)
 
+## Important
+1. You need to add your own SMTP server in python_email_sender.py
+2. You need to modify the receiver email address in mailwatch.py
+
 ## Features
 
 1. **Email Sending Option**: 
