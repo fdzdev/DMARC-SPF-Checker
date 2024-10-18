@@ -20,6 +20,8 @@ Please enter the domains you want to check (comma-separated): {domain1}, {domain
 
 ![Analysis](https://github.com/fdzdev/DMARC-SPF-Checker/blob/main/Pictures/change_pw.png)
 
+3. If you need a temporal testing SMTP server, or assistance of any kind reach out to me on LinkedIn 
+
 ## Features
 
 1. **Email Sending Option**: 
