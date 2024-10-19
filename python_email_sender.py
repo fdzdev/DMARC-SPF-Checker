@@ -9,10 +9,10 @@ def send_spoofed_email(spoofed_domain, recipient_email):
         # Generate the spoofed email address using the domain passed in
         spoofed_sender_email = f"{spoofed_domain}"  # Spoofed sender
         recipient_email = f"{recipient_email}"  # Recipient email
-        auth_email = ""  # Email used for authentication
-        smtp_server = ""
+        auth_email = "test@openm.solutions"  # Email used for authentication
+        smtp_server = "c2480355.ferozo.com"
         port = 465
-        password = ""
+        password = "sSZY/Pz8aH"
 
         # Email message content
         subject = "Testing spoofed email"
@@ -20,6 +20,8 @@ def send_spoofed_email(spoofed_domain, recipient_email):
         <html>
         <body>
             <p>Hello,<br>
+            <br>
+            Facundo Fernandez (@offsec01)
                This is a test email to check how spoofed sender addresses are handled.<br>
                Please review the headers to verify the sender.<br>
                Spoofed domain: {spoofed_domain}
