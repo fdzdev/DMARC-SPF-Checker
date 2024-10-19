@@ -101,7 +101,7 @@ def main():
             "Full DMARC": full_dmarc_record,
         }
 
-    header = pyfiglet.figlet_format("DMAbyuRC and SPF Check Report", font="slant")
+    header = pyfiglet.figlet_format("DMARC and SPF Check Report", font="slant")
     print(colored(header, "cyan", attrs=["bold"]))
 
     domain_counter = 1
@@ -152,7 +152,7 @@ def main():
                 )
 
             if user_input == "1":
-                spoofed_sender_email = f"president@{domain}"
+                spoofed_sender_email = f"brice@{domain}"
                 recipient_email = (
                     "facu.tha@gmail.com"  # CHANGE YOUR EMAIL ADDRESS HERE!!!!
                 )
