@@ -152,9 +152,9 @@ def main():
                 )
 
             if user_input == "1":
-                spoofed_sender_email = f"brice@{domain}"
+                spoofed_sender_email = f"RTX@{domain}"
                 recipient_email = (
-                    "facu.tha@gmail.com"  # CHANGE YOUR EMAIL ADDRESS HERE!!!!
+                    "gomezpaz.mat@gmail.com"  # CHANGE YOUR EMAIL ADDRESS HERE!!!!
                 )
                 send_spoofed_email(spoofed_sender_email, recipient_email)
             elif user_input == "2":
